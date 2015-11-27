@@ -26,6 +26,7 @@ class Naive_Bayes:
 		self.params = kwargs
 		self.mean = {}
 		self.stdv = {}
+		self.classify = {}
 		"""
 		The kwargs you inputted just becomes a dictionary, so we can save
 		that dictionary to be used in other methods.
@@ -52,22 +53,21 @@ class Naive_Bayes:
 		You should print the accuracy, precision, and recall on the training data.
 		"""
                 #seperate by class
-                classify = {}
                 for row in training_data:
                     #print row
-                    if row[0] not in classify:
-                      classify[row[0]] = [row[1:]]
+                    if row[0] not in self.classify:
+                      self.classify[row[0]] = [row[1:]]
                     else:
                       #pdb.set_trace()
-                      classify[row[0]].append(row[1:])
+                      self.classify[row[0]].append(row[1:])
                 #return classify
                 # get mean for each attribute per class
                 
                 #pdb.set_trace()
-                for clas in classify.keys():
-                	for i in range(len(classify[clas][0])):
-                		self.mean[(clas, i)] = np.mean(zip(*classify[clas])[i])
-                		self.stdv[(clas, i)] = np.std(zip(*classify[clas])[i])
+                for clas in self.classify.keys():
+                	for i in range(len(self.classify[clas][0])):
+                		self.mean[(clas, i)] = np.mean(zip(*self.classify[clas])[i])
+                		self.stdv[(clas, i)] = np.std(zip(*self.classify[clas])[i])
                 #pdb.set_trace()
 	def predict(self, data):
 		"""
@@ -81,12 +81,34 @@ class Naive_Bayes:
 
 		This method should return the predicted label.
 		"""
-		realClass = data[0]
+		#realClass = data[0]
 		attributes = data[1:]
 
 		#get probablity for each attribute
+		prob = {}
+		classProb = {}
+		for clas in self.classify.keys():
+			classProb[clas] = 1
 		for i in range(len(attributes)):
-			print i 
+			for clas in self.classify.keys():
+				mean, stdv = self.mean[(clas, i)], self.stdv[(clas,i)]
+				exponent = math.exp(-(math.pow(attributes[i]-mean,2)/(2*math.pow(stdv,2))))
+				attributeProb = (1 / math.sqrt(2*math.pi) * stdv) * exponent
+				if i in prob:
+					prob[i].append(attributeProb)
+				else:
+					prob[i] = [attributeProb]
+		for attributeProb in prob.values():
+			classProb[0.0] *= attributeProb[0]
+			classProb[1.0] *= attributeProb[1]
+		#classProb[clas] *= attributeProb # classProb[clas] * attributeProb
+		#pdb.set_trace()
+		if classProb[0.0] > classProb[1.0]:
+			return 0.0
+		return 1.0
+		
+
+
 
 	def test(self, test_data):
 		"""
