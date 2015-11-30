@@ -13,24 +13,25 @@ you want to use. But in this module you will need to
 3) train the algorithm
 4) test it and output the desired statistics.
 """
-
-# just to test the methods 
-if __name__=="__main__":
-
-    args = sys.argv[1:]
+def trainNtest(args):
     classifierType = ["decision_tree", "naive_bayes", "neural_network"]
 
     
     data = ""
-    if len(args) == 3:
+    if len(args) == 4:
         if args[0][3:] == "congress":
             data = ld.load_congress_data(int(args[1][3:]) / 100.0)
-        elif args[0][3:] == "monks":
+        elif args[0][3:] == "monk":
             data = ld.load_monks(int(args[1]))
         elif args[0][3:] == "iris":
             data = ld.load_iris(int(args[1][3:]) / 100.0)
+        else:
+            print "INVALID DATA NAME"
+            return
         classifier = Classifier(classifierType[int(args[2][3:])])
-
+    else:
+        print "ERROR: NEED 4 PARAMETERS"
+        return 
 
 
     #pdb.set_trace()
@@ -42,10 +43,26 @@ if __name__=="__main__":
     #data = ld.load_iris(.70)
 
     #pdb.set_trace()
-    classify =  classifier.train(data[0])
 
-    classifier.test(data[1])
+    classifier.train(data[0])
 
+
+    if args[3] == "-test":
+        classifier.test(data[1])
+    else:
+        classifier.test(data[0])
+
+    #classifier.test(data[0])
+
+
+
+# just to test the methods 
+if __name__=="__main__":
+
+    args = sys.argv[1:]
+
+    trainNtest(args)
+    
     #pdb.set_trace()
     #nb.train(iris[0])
     #pdb.set_trace()
