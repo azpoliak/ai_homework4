@@ -94,18 +94,32 @@ class Naive_Bayes:
 				mean, stdv = self.mean[(clas, i)], self.stdv[(clas,i)]
 				exponent = math.exp(-(math.pow(attributes[i]-mean,2)/(2*math.pow(stdv,2))))
 				attributeProb = (1 / math.sqrt(2*math.pi) * stdv) * exponent
-				if i in prob:
-					prob[i].append(attributeProb)
-				else:
-					prob[i] = [attributeProb]
+				#if i in prob:
+					#prob[i].append(attributeProb)
+					#prob[i][clas] = attributeProb
+				#else:
+					#prob[i][clas] = attributeProb
+					#prob[i] = [attributeProb]
+				if i not in prob:
+					prob[i] = {}
+				prob[i][clas] = attributeProb
+		#TODO: change this so that it can allow with cases that have more than 2 classifications
+		#pdb.set_trace()
 		for attributeProb in prob.values():
-			classProb[0.0] *= attributeProb[0]
-			classProb[1.0] *= attributeProb[1]
+			for clas in self.classify.keys():
+				classProb[clas] *= attributeProb[clas]
+			#classProb[1.0] *= attributeProb[1]
 		#classProb[clas] *= attributeProb # classProb[clas] * attributeProb
 		#pdb.set_trace()
-		if classProb[0.0] > classProb[1.0]:
-			return 0.0
-		return 1.0
+
+		#db.set_trace()
+		maxClass = self.classify.keys()[0]
+		maxProb = classProb[maxClass] 
+		for clas in self.classify.keys():
+			if classProb[clas] > maxProb:
+				maxProb = classProb[clas]
+				maxClass = clas
+		return maxClass
 		
 
 
