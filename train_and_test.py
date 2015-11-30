@@ -1,6 +1,8 @@
 import numpy as np
 import sys
-import load_data
+import load_data as ld
+import pdb
+from classifier import Classifier
 
 """
 This is the main python method that will be run.
@@ -11,3 +13,51 @@ you want to use. But in this module you will need to
 3) train the algorithm
 4) test it and output the desired statistics.
 """
+
+# just to test the methods 
+if __name__=="__main__":
+
+    args = sys.argv[1:]
+    classifierType = ["decision_tree", "naive_bayes", "neural_network"]
+
+    
+    data = ""
+    if len(args) == 3:
+        if args[0][3:] == "congress":
+            data = ld.load_congress_data(int(args[1][3:]) / 100.0)
+        elif args[0][3:] == "monks":
+            data = ld.load_monks(int(args[1]))
+        elif args[0][3:] == "iris":
+            data = ld.load_iris(int(args[1][3:]) / 100.0)
+        classifier = Classifier(classifierType[int(args[2][3:])])
+
+
+
+    #pdb.set_trace()
+    #nb = Naive_Bayes("naive_bayes")
+
+    #classifier = Classifier(classifierType[1])
+    #data = ld.load_congress_data(.85)
+
+    #data = ld.load_iris(.70)
+
+    #pdb.set_trace()
+    classify =  classifier.train(data[0])
+
+    classifier.test(data[1])
+
+    #pdb.set_trace()
+    #nb.train(iris[0])
+    #pdb.set_trace()
+    #nb.test(congress[1])
+    '''
+    tot, hit = 0, 0
+    for person in data[1]:
+      predict = classifier.predict(person)
+      if predict == person[0]:
+        hit += 1
+      tot += 1
+
+    print hit, tot, hit / float(tot)
+    '''
+
