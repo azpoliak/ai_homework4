@@ -66,7 +66,7 @@ class Decision_Tree:
 
             #Build tree
             self.tree = self.construct_tree(training_data, self.labels)
-            
+            #pdb.set_trace()
             #Test to calculate error
             #Report accuracy, precision, and recall using IG and IG ratio
             #Pruning
@@ -79,6 +79,7 @@ class Decision_Tree:
                 return classes[0]
             #If there is only one attribute left, return
             if (len(data[0]) == 1):
+                #pdb.set_trace()
                 return self.find_majority(classes)
             #Otherwise, select best feature and recursively build tree
             else:
@@ -88,6 +89,9 @@ class Decision_Tree:
                 del(labels[best_feature])
                 feature_values = [clas[best_feature] for clas in data]
                 unique_values = set(feature_values)
+                pdb.set_trace()
+                # check if len(unique_values) == to number of options per features
+                # if less, then we need to figure which is missing and make that a val and do [val] = which class it works with
                 for val in unique_values:
                     subset_labels = labels[:]
                     tree[best_label][val] = self.construct_tree(self.split_data_on_attribute(data, best_feature, val), subset_labels)
