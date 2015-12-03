@@ -5,7 +5,7 @@ Class for a classification algorithm.
 import numpy as np
 import pdb
 from naive_bayes import Naive_Bayes
-
+from decision_tree import Decision_Tree
 
 class Classifier:
 
@@ -58,6 +58,9 @@ class Classifier:
         elif self.classifier_type == 'naive_bayes':
             self.nb = Naive_Bayes("naive_bayes")
             self.nb.train(training_data)
+        elif self.classifier_type =='decision_tree':
+            self.dt = Decision_Tree("decision_tree")
+            self.dt.train(training_data)
 
     def predict(self, data):
         """
