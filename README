@@ -1,0 +1,20 @@
+Sayge Schell, Adam Poliak
+
+To run, do the following:
+python train_and_test.py -d=congress -p=85 -m=0 -test
+  -d refers to data set
+  -p refers to percent, is -d is monk, then instead of -p=(int), just do 1,2,or 3, to determine which monk data set
+  -m refers to machine learning method
+  -train in order to test on the training data
+
+
+Some info about the data:
+
+Congress: Either Republican or Democrat
+  Number of features: 16
+
+Iris: Either 1, 2, 3 determining type
+  Number of features: 4
+
+Monks:
+  Number of features: 6
