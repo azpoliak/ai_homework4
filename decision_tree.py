@@ -89,9 +89,6 @@ class Decision_Tree:
                 del(labels[best_feature])
                 feature_values = [clas[best_feature] for clas in data]
                 unique_values = set(feature_values)
-                pdb.set_trace()
-                # check if len(unique_values) == to number of options per features
-                # if less, then we need to figure which is missing and make that a val and do [val] = which class it works with
                 for val in unique_values:
                     subset_labels = labels[:]
                     tree[best_label][val] = self.construct_tree(self.split_data_on_attribute(data, best_feature, val), subset_labels)
@@ -219,25 +216,69 @@ class Decision_Tree:
 
 		You should print the accuracy, precision, and recall on the test data.
 		"""
+                #print(len(test_data))
+                results = []
                 for i in range(0, len(test_data)):
-                    print("begin")
-                    outcome = self.classify(self.tree, self.labels, test_data[i])
+                    #print("begin")
+                    outcome = self.classify(self.tree, test_data[i])
+                    results.append(outcome)
+                print(results)
+                print(len(results))
 
-        def classify(self, tree, labels, test_data):
+        def find_likely_outcome(self, tree, tally):
+            """Finds the most likely outcome for the given tree."""
+            #Keep going down each path until a leaf node is reached
+            for key in tree.keys():
+                #print(key)
+                #print(tree[key])
+                #traverse if still a tree
+                if type(tree[key]).__name__ == 'dict':
+                    #print(key)
+                    #print(tree.keys())
+                    self.find_likely_outcome(tree[key], tally)
+                #If not still a tree, we have reached a leaf, so tally leaf count 
+                else:
+                    #print(tree[key])
+                    #print(tally.keys())
+                    if tree[key] not in tally.keys():
+                        #print("key not in tally")
+                        tally[(tree[key])] = 0
+                    tally[(tree[key])] += 1
+            #Return tally with highest number
+            highest_tally = -1
+            for item in tally:
+                if tally[item] > highest_tally:
+                    highest_tally = item
+            #print(tally)
+            #print(highest_tally)
+            return highest_tally
+
+        def classify(self, tree, test_data):
             """Recursively predicts the outcome of the test data."""
             first_label = tree.keys()[0]
             dictionary = tree[first_label]
-            print(first_label)
-            print(test_data)
-            print(dictionary)
+            #print(first_label)
+            #print(test_data)
+            #print(dictionary)
             
             for key in dictionary.keys():
-                print (dictionary.keys())
-                print(key)
-                print(test_data[first_label])
-                if test_data[first_label] == key:
-                    if type(dictionary[key]).__name__ == 'dict':
-                        classLabel = self.classify(dictionary[key], labels, test_data)
-                    else:
-                        classLabel = dictionary[key]
+                #print (dictionary.keys())
+                #print(key)
+                #print(test_data[first_label])
+                try:
+                    print(test_data[first_label])
+                    if test_data[first_label] == key:
+                        #print("this was triggered")
+                        if type(dictionary[key]).__name__ == 'dict':
+                            classLabel = self.classify(dictionary[key], test_data)
+                        else:
+                            classLabel = dictionary[key]
+                #If the label does not exist in the tree's keys
+                except :
+                    #print(first_label)
+                    #print(test_data)
+                    #print(test_data[first_label])
+                    #print("this was triggered")
+                    #check all values below and find most likely one
+                    classLabel = self.find_likely_outcome(dictionary, {})
             return classLabel
