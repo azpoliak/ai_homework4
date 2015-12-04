@@ -244,7 +244,8 @@ class Decision_Tree:
             """Recursively predicts the outcome of the test data."""
             first_label = tree.keys()[0]
             dictionary = tree[first_label]
-            
+            classLabel = {}
+
             for key in dictionary.keys():
                 try:
                     if test_data[first_label] == key:
