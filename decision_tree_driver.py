@@ -3,13 +3,13 @@ from naive_bayes import Naive_Bayes
 import load_data as ld
 import pdb
 
-nb = Naive_Bayes("naive_bayes")
+nb = Decision_Tree("decision_tree")
 
 #iris = ld.load_monks(3)
 #iris = ld.load_monks(2)
 #iris = ld.load_monks(3)
-#iris = ld.load_monks1_data(.75)
 iris = ld.load_iris(.75)
+#iris = ld.load_iris_data(.75)
 
 #nb.train(iris[0])
 """tot, hit = 0, 0

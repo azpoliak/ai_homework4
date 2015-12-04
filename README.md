@@ -43,9 +43,9 @@ Recall:                     1.0
 *Naive Bayes*-
 
             Congress            Monk1           Monk2           Monk3           Iris
-Accuracy:   .889908256881
-Precision:  .321100917431
-Recall:     .777777777778
+Accuracy:   .889908256881       .576388888889   .643259259259   .731481481481   .947368421053
+Precision:  .321100917431       .743055555556   .875            .259259259259   .289473684211
+Recall:     .777777777778       1.48611111111   1.30344827586   1.30344827586   1.0
 
 *Neural Network* - 
 Key: DW = default weight, AW = alternate weight, M = with momentum, NM = without momentum
