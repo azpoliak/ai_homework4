@@ -1,5 +1,6 @@
 """
-Class for a classification algorithm.
+Class for Decision Tree algorithm. Design for decision tree based off of the algorithm outlined in Ch 3 of "Machine
+Learning in Action" by Peter Harrington.
 """
 
 import numpy as np
@@ -66,7 +67,6 @@ class Decision_Tree:
 
             #Build tree
             self.tree = self.construct_tree(training_data, self.labels)
-            #print(self.tree)
 	    pdb.set_trace()
             #Test to calculate error
             #Report accuracy, precision, and recall using IG and IG ratio
@@ -80,7 +80,6 @@ class Decision_Tree:
                 return classes[0]
             #If there is only one attribute left, return
             if (len(data[0]) == 1):
-                #pdb.set_trace()
                 return self.find_majority(classes)
             #Otherwise, select best feature and recursively build tree
             else:
@@ -97,7 +96,7 @@ class Decision_Tree:
             return tree
 
         def choose_best_split(self, data):
-            """Chooses the best feature to split the tree on."""
+            """Chooses the best feature tosplit the tree on."""
             numFeatures = len(data[0]) - 1 # Counts how many data features there are
             base_entropy = self.calculate_entropy(data) # Calculates base entropy
             best_info_gain = 0.0 # Keeps track of highest information gain
@@ -223,8 +222,8 @@ class Decision_Tree:
                     #print("begin")
                     outcome = self.classify(self.tree, test_data[i])
                     results.append(outcome)
-                print(results)
-                print(len(results))
+                #print(results)
+                #print(len(results))
 
         def find_likely_outcome(self, tree, tally):
             """Finds the most likely outcome for the given tree."""
