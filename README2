@@ -4,17 +4,6 @@ Implementation of ML algorithms for AI Homework4
 Adam Poliak, Sayge Schell
 Dec 4th, 2015
 
-To run, do the following:
-python train_and_test.py -d=congress -p=85 -m=0 -test
--d refers to the data set
--p refers to the percent, if -d is monk, then instead of -p=(int), do 1, 2, or 3 to determine with monk data set
--m refers to machine learning method
-
-**TODO**
--igr refers to information gain ratio in the case m is the decision tree
--pr refers to pruning in the case m is the decision tree
-
-
 Please note, for precision, the value for the first data set was chosen as the 'positive' one. All other values were set
 to be negatives.
 
