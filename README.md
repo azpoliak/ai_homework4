@@ -4,6 +4,8 @@ Implementation of ML algorithms for AI Homework4
 Adam Poliak, Sayge Schell
 Dec 4th, 2015
 
+Please note, for precision, the value for the first data set was chosen as the 'positive' one. All other values were set
+to be negatives.
 
 *Decision Trees* -
 Key: IGR = Information Gain ratio, IG = Information Gain, NP = No pruning, P = Pruning
@@ -41,9 +43,9 @@ Recall:                     1.0
 *Naive Bayes*-
 
             Congress            Monk1           Monk2           Monk3           Iris
-Accuracy:
-Precision:
-Recall:
+Accuracy:   .889908256881
+Precision:  .321100917431
+Recall:     .777777777778
 
 *Neural Network* - 
 Key: DW = default weight, AW = alternate weight, M = with momentum, NM = without momentum
