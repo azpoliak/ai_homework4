@@ -121,7 +121,7 @@ def load_monks(data_set_number):
         if test is None:
             test = vector
         else:
-            test = np.vstack((training, vector))
+            test = np.vstack((test, vector))
     
     return (training, test)
 
