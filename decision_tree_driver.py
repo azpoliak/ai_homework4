@@ -4,41 +4,67 @@ import pdb
 
 nb = Decision_Tree("decision_tree")
 
-monks1 = ld.load_monks(1)
-monks2 = ld.load_monks(2)
-monks3 = ld.load_monks(3)
-congress = ld.load_congress_data(.75)
+#iris = ld.load_monks(3)
+#iris = ld.load_monks(2)
+#iris = ld.load_monks(3)
+#iris = ld.load_monks1_data(.75)
 iris = ld.load_iris(.75)
 
+#nb.train(iris[0])
+"""tot, hit = 0, 0
+for person in iris[1]:
+  predict = nb.predict(person)
+  if predict == person[0]:
+  	hit += 1
+  tot += 1"""
+
+#classify =  nb.train(iris[0])
+
 nb.train(iris[0])
+#nb.train(iris[0])
+#nb.train(iris[0])
+#nb.train(iris[0])
+#pdb.set_trace()
+#nb.test(iris[1])
+
+
+#Accuracy
 tot, hit = 0, 0
 for person in iris[1]:
   predict = nb.predict(person)
   if predict == person[0]:
   	hit += 1
   tot += 1
+accuracy = hit/float(tot)
+print "Accuracy: ", accuracy
 
-#classify =  nb.train(congress[0])
+#Recall
+id_pos, actual_pos = 0, 0
+for person in iris[1]:
+  predict = nb.predict(person)
+  if predict == iris[1][0][0]:
+  	id_pos += 1
+  if person[0] == iris[1][0][0]:
+        actual_pos += 1
+  tot += 1
+recall = id_pos/float(actual_pos)
+print "Recall: ", recall
 
-#nb.train(monks1[0])
-#nb.train(monks2[0])
-#nb.train(monks3[0])
-#nb.train(iris[0])
-#pdb.set_trace()
-#nb.test(congress[1])
+
+#Precision
+total, p = 0, 0
+for person in iris[1]:
+  predict = nb.predict(person)
+  if predict == iris[1][0][0]:
+    p += 1
+  total += 1
+precision = id_pos/float(total)
+print "Precision: ", precision
 
 """tot, hit = 0, 0
-for person in congress[1]:
+for person in iris[1]:
   predict = nb.predict(person)
   if predict == person[0]:
   	hit += 1
   tot += 1"""
 
-"""tot, hit = 0, 0
-for person in monks3[1]:
-  predict = nb.predict(person)
-  if predict == person[0]:
-  	hit += 1
-  tot += 1"""
-
-print hit, tot, hit / float(tot)
