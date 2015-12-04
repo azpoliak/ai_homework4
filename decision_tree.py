@@ -257,6 +257,7 @@ class Decision_Tree:
             """Recursively predicts the outcome of the test data."""
             first_label = tree.keys()[0]
             dictionary = tree[first_label]
+            classLabel = {}
             #print(first_label)
             #print(test_data)
             #print(dictionary)
@@ -282,3 +283,4 @@ class Decision_Tree:
                     #check all values below and find most likely one
                     classLabel = self.find_likely_outcome(dictionary, {})
             return classLabel
+
