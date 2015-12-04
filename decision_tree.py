@@ -66,7 +66,8 @@ class Decision_Tree:
 
             #Build tree
             self.tree = self.construct_tree(training_data, self.labels)
-            #pdb.set_trace()
+            #print(self.tree)
+	    pdb.set_trace()
             #Test to calculate error
             #Report accuracy, precision, and recall using IG and IG ratio
             #Pruning
@@ -205,7 +206,7 @@ class Decision_Tree:
 
 		This method should return the predicted label.
 		"""
-                outcome = self.classify(self.tree, self.labels, data)
+                outcome = self.classify(self.tree, data)
                 return outcome
 
 	def test(self, test_data):
@@ -260,13 +261,13 @@ class Decision_Tree:
             #print(first_label)
             #print(test_data)
             #print(dictionary)
-            
+            classLabel = {} 
             for key in dictionary.keys():
                 #print (dictionary.keys())
                 #print(key)
                 #print(test_data[first_label])
                 try:
-                    print(test_data[first_label])
+                    #print(test_data[first_label])
                     if test_data[first_label] == key:
                         #print("this was triggered")
                         if type(dictionary[key]).__name__ == 'dict':
