@@ -131,16 +131,17 @@ class Neural_Network:
                 self.DW[0] = np.subtract(lrate * dtao * np.linalg.norm(hidden_layer),wdecay * self.weights[1] + momentum * self.DW[0])
                 blah = lrate * dtah * np.linalg.norm(self.train_inputs[i])
                 blah2 = wdecay * self.weights[0] + momentum * self.DW[1]
-                pdb.set_trace()
-                self.DW[1] = np.subtract(lrate * dtah * np.linalg.norm(self.train_inputs[i]), wdecay * self.weights[0] + momentum * self.DW[1])
-                #self.Db[0] = np.subtract(lrate * dtao * 1, wdecay * self.bias[0] + momentum * self.Db[0])
+                #self.DW[1] = np.subtract(lrate * dtah * np.linalg.norm(self.train_inputs[i]), wdecay * self.weights[0] + momentum * self.DW[1])
+                self.Db[0] = np.subtract(lrate * dtao * 1, wdecay * self.bias[0] + momentum * self.Db[0])
                 self.Db[1] = np.subtract(lrate * dtah * 1, wdecay * self.bias[1] + momentum * self.Db[1])
 
                 # update the weights
-                self.weights[0] += self.DW[0]
-                self.weights[1] += self.DW[1]
+                '''
+                self.weights[0] += self.DW[1]
+                self.weights[1] += self.DW[0]
                 self.bias[0] += self.Db[0]
                 self.bias[1] += self.Db[1]
+                '''
 
 
 
