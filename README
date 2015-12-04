@@ -51,6 +51,8 @@ Accuracy:   0.526315789474  0.710526315789
 Precision:  0.184210526315  0.289473684211
 Recall:     0.636363636364  1.0
 
+It appears that using the information gain ratio instead of pure information gain affected different data sets in different ways. However, it generally raised accuracy and lowered precision and recall. However, in the case of Monk3 and Iris data sets, the accuracy was lowered instead of raised.
+
 *Naive Bayes*-
 
             Congress            Monk1           Monk2           Monk3           Iris
