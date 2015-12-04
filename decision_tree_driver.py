@@ -3,7 +3,7 @@ from naive_bayes import Naive_Bayes
 import load_data as ld
 import pdb
 
-nb = Decision_Tree("decision_tree", False, True)
+nb = Decision_Tree("decision_tree", pruning=False, info_gain_ratio=True)
 
 #congress = ld.load_monks(3)
 #congress = ld.load_monks(2)

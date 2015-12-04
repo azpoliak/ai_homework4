@@ -10,7 +10,7 @@ import operator
 
 class Decision_Tree:
 
-	def __init__(self, classifier_type, pruning=False, IGR=False):
+	def __init__(self, classifier_type, **kwargs):
 		"""
 		Initializer. Classifier_type should be a string which refers
 		to the specific algorithm the current classifier is using.
@@ -25,10 +25,11 @@ class Decision_Tree:
 		Here I have the weight matrices being stored in a list called weights (initially empty).
 		"""
 		self.classifier_type = classifier_type
+                self.params = kwargs
                 self.tree = {}
                 self.labels = []
-                self.pruning = pruning
-                self.IGR = IGR
+                self.pruning = self.params['pruning']
+                self.IGR = self.params['info_gain_ratio']
 
                 """
 		The kwargs you inputted just becomes a dictionary, so we can save
