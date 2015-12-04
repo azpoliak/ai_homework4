@@ -23,33 +23,33 @@ Key: IGR = Information Gain ratio, IG = Information Gain, NP = No pruning, P = P
 
 Congress- 
             IGR-NP          IG - NP             IGR -P              IGR - NP
-Accuracy:                   0.926605504587
-Precision:                  0.412844036697
-Recall:                     1.0
+Accuracy:   0.935889815614  0.926605504587
+Precision:  0.403669724771  0.412844036697
+Recall:     0.977777777778  1.0
 
 Monk 1 -
 
-Accuracy:                   0.796296296296
-Precision:                  0.481481481481
-Recall:                     0.962962962963
+Accuracy:   0.916666666667  0.796296296296
+Precision:  0.472222222222  0.481481481481
+Recall:     0.944444444444  0.962962962963
 
 Monk2 -
 
-Accuracy:                   0.513888888889
-Precision:                  0.476851851852
-Recall:                     0.710344827586
+Accuracy:  0.530092592593   0.513888888889
+Precision: 0.527777777778   0.476851851852
+Recall:    0.786205896552   0.710344827586
 
 Monk3 -
 
-Accuracy:                   0.925925925926
-Precision:                  0.4818181818181
-Recall:                     0.912280701754
+Accuracy:   0.91666666667   0.925925925926
+Precision:  0.47222222222   0.4818181818181
+Recall:     0.894736842105  0.912280701754
 
 Iris-
 
-Accuracy:                   0.710526315789
-Precision:                  0.289473684211
-Recall:                     1.0
+Accuracy:   0.526315789474  0.710526315789
+Precision:  0.184210526315  0.289473684211
+Recall:     0.636363636364  1.0
 
 *Naive Bayes*-
 

@@ -10,7 +10,7 @@ import operator
 
 class Decision_Tree:
 
-	def __init__(self, classifier_type, **kwargs):
+	def __init__(self, classifier_type, pruning=False, IGR=False):
 		"""
 		Initializer. Classifier_type should be a string which refers
 		to the specific algorithm the current classifier is using.
@@ -25,9 +25,10 @@ class Decision_Tree:
 		Here I have the weight matrices being stored in a list called weights (initially empty).
 		"""
 		self.classifier_type = classifier_type
-		self.params = kwargs         
                 self.tree = {}
                 self.labels = []
+                self.pruning = pruning
+                self.IGR = IGR
 
                 """
 		The kwargs you inputted just becomes a dictionary, so we can save
@@ -67,9 +68,7 @@ class Decision_Tree:
 
             #Build tree
             self.tree = self.construct_tree(training_data, self.labels)
-            print(self.tree)
             #TODO
-            #IG ratio
             #Pruning
         
         def construct_tree(self, data, labels):
@@ -113,6 +112,15 @@ class Decision_Tree:
                     prob = len(subset)/float(len(data))
                     entropy += prob * self.calculate_entropy(subset)
                 info_gain = base_entropy - entropy
+                #Find the intrinsic value for the attribute
+                if self.IGR:
+                    intrinsic_val = -1*( prob * math.log(prob,2))
+                    try:
+                        info_gain_ratio = float(info_gain)/intrinsic_val
+                    except:
+                        info_gain_ratio = 0
+                    info_gain = info_gain_ratio
+                #Update best gain 
                 if (info_gain > best_info_gain):
                     best_info_gain = info_gain
                     best_feature = i 
@@ -171,6 +179,7 @@ class Decision_Tree:
             """Determines the information gain that would happen if the particular attribute was chosen."""
             occurrences = {} # Keeps track of how many time the attribute occurs in the data set
             entropy = 0.0 # Keeps track of the entropy of the data
+            prob = 1.0 # Default probability is 1
 
             #Count up occurrences of the attribute
             for record in data:
@@ -192,6 +201,7 @@ class Decision_Tree:
             #Calculate information gain
             information_gain = entropy(data, attribute2) - entropy
             return information_gain
+            
 
         def predict(self, data):
 		"""
