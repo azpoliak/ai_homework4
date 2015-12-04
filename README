@@ -2,9 +2,12 @@ Sayge Schell, Adam Poliak
 
 To run, do the following:
 python train_and_test.py -d=congress -p=85 -m=0 -test
+python train_and_test.py -d=congress -p=85 -m=0 -test -igr=n -pr=y
   -d refers to data set
   -p refers to percent, is -d is monk, then instead of -p=(int), just do 1,2,or 3, to determine which monk data set
   -m refers to machine learning method
+  -igr refers to information gain ratio
+  -pr refers to pruning
   -train in order to test on the training data
 
 
