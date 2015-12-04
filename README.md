@@ -6,239 +6,74 @@ Dec 4th, 2015
 
 
 *Decision Trees* -
+Key: IGR = Information Gain ratio, IG = Information Gain, NP = No pruning, P = Pruning
 
-Decision Tree 1: Information Gain with Pruning
-Congress-
-Accuracy:
-Precision:
-Recall:
+Congress- 
+            IGR-NP          IG - NP             IGR -P              IGR - NP
+Accuracy:                   0.926605504587
+Precision:                  0.412844036697
+Recall:                     1.0
 
-Monk1 -
-Accuracy:
-Precision:
-Recall:
+Monk 1 -
 
-Monk2 -
-Accuracy:
-Precision:
-Recall:
-
-Monk3 -
-Accuracy:
-Precision:
-Recall:
-
-Iris-
-Accuracy:
-Precision:
-Recall:
-
-Decision Tree 2: Information Gain without Pruning
-Congress-
-Accuracy:
-Precision:
-Recall:
-
-Monk1 -
-Accuracy:
-Precision:
-Recall:
+Accuracy:                   0.796296296296
+Precision:                  0.481481481481
+Recall:                     0.962962962963
 
 Monk2 -
-Accuracy:
-Precision:
-Recall:
+
+Accuracy:                   0.513888888889
+Precision:                  0.476851851852
+Recall:                     0.710344827586
 
 Monk3 -
-Accuracy:
-Precision:
-Recall:
+
+Accuracy:                   0.925925925926
+Precision:                  0.4818181818181
+Recall:                     0.912280701754
 
 Iris-
-Accuracy:
-Precision:
-Recall:
 
-Decision Tree 3: Information Gain Ratio with Pruning
-Congress-
-Accuracy:
-Precision:
-Recall:
-
-Monk1 -
-Accuracy:
-Precision:
-Recall:
-
-Monk2 -
-Accuracy:
-Precision:
-Recall:
-
-Monk3 -
-Accuracy:
-Precision:
-Recall:
-
-Iris-
-Accuracy:
-Precision:
-Recall:
-
-Decision Tree 4: Information Gain Ratio without Pruning
-Congress-
-Accuracy:
-Precision:
-Recall:
-
-Monk1 -
-Accuracy:
-Precision:
-Recall:
-
-Monk2 -
-Accuracy:
-Precision:
-Recall:
-
-Monk3 -
-Accuracy:
-Precision:
-Recall:
-
-Iris-
-Accuracy:
-Precision:
-Recall:
+Accuracy:                   0.710526315789
+Precision:                  0.289473684211
+Recall:                     1.0
 
 *Naive Bayes*-
 
-Congress-
-Accuracy:
-Precision:
-Recall:
-
-Monk1 -
-Accuracy:
-Precision:
-Recall:
-
-Monk2 -
-Accuracy:
-Precision:
-Recall:
-
-Monk3 -
-Accuracy:
-Precision:
-Recall:
-
-Iris-
+            Congress            Monk1           Monk2           Monk3           Iris
 Accuracy:
 Precision:
 Recall:
 
 *Neural Network* - 
-Neural Network 1: Default Weight Recall with Momentum
+Key: DW = default weight, AW = alternate weight, M = with momentum, NM = without momentum
+            DW-NM           AW-NM           DW-M            AW-M
 Congress-
+
 Accuracy:
 Precision:
 Recall:
 
 Monk1 -
+
 Accuracy:
 Precision:
 Recall:
 
 Monk2 -
+
 Accuracy:
 Precision:
 Recall:
 
 Monk3 -
+
 Accuracy:
 Precision:
 Recall:
 
 Iris-
-Accuracy:
-Precision:
-Recall:
 
-Neural Network 2: Default Weight Recall without Momentum
-Congress-
-Accuracy:
-Precision:
-Recall:
-
-Monk1 -
-Accuracy:
-Precision:
-Recall:
-
-Monk2 -
-Accuracy:
-Precision:
-Recall:
-
-Monk3 -
-Accuracy:
-Precision:
-Recall:
-
-Iris-
-Accuracy:
-Precision:
-Recall:
-
-Neural Network 3: Alternative Weight Recall with Momentum
-Congress-
-Accuracy:
-Precision:
-Recall:
-
-Monk1 -
-Accuracy:
-Precision:
-Recall:
-
-Monk2 -
-Accuracy:
-Precision:
-Recall:
-
-Monk3 -
-Accuracy:
-Precision:
-Recall:
-
-Iris-
-Accuracy:
-Precision:
-Recall:
-
-Neural Network 4: Alternative Weight Recall without Momentum
-Congress-
-Accuracy:
-Precision:
-Recall:
-
-Monk1 -
-Accuracy:
-Precision:
-Recall:
-
-Monk2 -
-Accuracy:
-Precision:
-Recall:
-
-Monk3 -
-Accuracy:
-Precision:
-Recall:
-
-Iris-
 Accuracy:
 Precision:
 Recall:
