@@ -92,33 +92,58 @@ class Neural_Network:
 
         You should print the accuracy, precision, and recall on the training data.
         """
+
+        lrate = 0.1
+        momentum = 0.9
+        wdecay = 0
+
         #self.train_output = np.zeros((len(training_data), 1))
         for i in range(len(training_data)):
-          self.train_inputs[i] = training_data[i][1:]
-          self.train_outputs[i] = training_data[i][0]
+            self.train_inputs[i] = training_data[i][1:]
+            self.train_outputs[i] = training_data[i][0]
 
-        sig_hid = np.dot(self.train_inputs, self.weights[0])
-        sig_hid = np.add(sig_hid, self.bias[0].T)
-        hidden_layer = self.sigmoid(sig_hid)
+            sig_hid = np.dot(self.train_inputs[i], self.weights[0])
+            sig_hid = np.add(sig_hid, self.bias[0].T)
+            hidden_layer = self.sigmoid(sig_hid)
 
-        sig_out = np.dot(hidden_layer, self.weights[1])
-        sig_out = np.add(sig_out, self.bias[1].T)
-        curr_output = self.sigmoid(sig_out)
+            sig_out = np.dot(hidden_layer, self.weights[1])
+            sig_out = np.add(sig_out, self.bias[1].T)
+            curr_output = self.sigmoid(sig_out)
 
-        '''
-        tt = tpat(patno, :)
-        Sum of sqaured error
-        err = (tt-oo)' * (tt-oo'
-        terr = terr + err;
-        '''
-        err = np.multiply(np.linalg.norm(np.subtract(self.train_outputs, curr_output)),np.subtract(self.train_outputs, curr_output))
-        ep = 10
-        if ep > 1:
-            #pdb.set_trace()
-            dtao = np.dot(np.dot(np.subtract(self.train_outputs, curr_output),curr_output.T),(1 - curr_output))
-            blah = np.multiply(np.linalg.norm(self.weights[1]), dtao)
-            pdb.set_trace()
-            dtah = np.dot(np.dot(np.dot(np.linalg.norm(self.weights[1]), dtao), hidden_layer),(1 - hidden_layer))
+            '''
+            tt = tpat(patno, :)
+            Sum of sqaured error
+            err = (tt-oo)' * (tt-oo'
+            terr = terr + err;
+            '''
+            err = np.multiply(np.linalg.norm(np.subtract(self.train_outputs, curr_output)),np.subtract(self.train_outputs, curr_output))
+            if i > 0:
+                #pdb.set_trace()
+                #backward passing
+                dtao = np.dot(np.dot(np.subtract(self.train_outputs[i], curr_output),curr_output.T),(1 - curr_output))
+                blah = np.multiply(np.linalg.norm(self.weights[1]), dtao)
+                blah2 = np.dot(blah.T,hidden_layer)
+                dtah = np.dot(blah2,(1 - hidden_layer).T)
+
+                #dealing with the weight changes
+                blah1 = lrate * dtao * np.linalg.norm(hidden_layer)
+                blah3 = wdecay * self.weights[1] + momentum * self.DW[0]
+                self.DW[0] = np.subtract(lrate * dtao * np.linalg.norm(hidden_layer),wdecay * self.weights[1] + momentum * self.DW[0])
+                blah = lrate * dtah * np.linalg.norm(self.train_inputs[i])
+                blah2 = wdecay * self.weights[0] + momentum * self.DW[1]
+                pdb.set_trace()
+                self.DW[1] = np.subtract(lrate * dtah * np.linalg.norm(self.train_inputs[i]), wdecay * self.weights[0] + momentum * self.DW[1])
+                #self.Db[0] = np.subtract(lrate * dtao * 1, wdecay * self.bias[0] + momentum * self.Db[0])
+                self.Db[1] = np.subtract(lrate * dtah * 1, wdecay * self.bias[1] + momentum * self.Db[1])
+
+                # update the weights
+                self.weights[0] += self.DW[0]
+                self.weights[1] += self.DW[1]
+                self.bias[0] += self.Db[0]
+                self.bias[1] += self.Db[1]
+
+
+
 
 
         '''
@@ -138,6 +163,8 @@ class Neural_Network:
             bo = bo + delta_bo;
             bh = bh + delta_bh;
         '''
+        pdb.set_trace()
+
 
         #l1 = self.nonlin(np.dot(self.train_inputs, self.weights[0]))
         #curr_hidden = self.sigmoid(np.add(np.multiply(self.weights[0], curr_input), self.bias[0]))
