@@ -71,6 +71,7 @@ class Decision_Tree:
             self.tree = self.construct_tree(training_data, self.labels)
             #TODO
             #Pruning
+            #For pruning, test nodes that have only leaf nodes as decendents
         
         def construct_tree(self, data, labels):
             """Constucts a tree given the data and attributes."""
@@ -115,11 +116,11 @@ class Decision_Tree:
                 info_gain = base_entropy - entropy
                 #Find the intrinsic value for the attribute
                 if self.IGR:
-                    intrinsic_val = -1*( prob * math.log(prob,2))
+                    intrinsic_val = -1*( prob * float(math.log(prob,2)))
                     try:
                         info_gain_ratio = float(info_gain)/intrinsic_val
                     except:
-                        info_gain_ratio = 0
+                        info_gain_ratio = info_gain
                     info_gain = info_gain_ratio
                 #Update best gain 
                 if (info_gain > best_info_gain):
@@ -175,34 +176,6 @@ class Decision_Tree:
                 prob = occurrences[occurrence]/data_length
                 entropy -= prob * math.log(prob/data_length, 2)
             return entropy
-
-        def information_gain(self, data, attribute, attribute2):
-            """Determines the information gain that would happen if the particular attribute was chosen."""
-            occurrences = {} # Keeps track of how many time the attribute occurs in the data set
-            entropy = 0.0 # Keeps track of the entropy of the data
-            prob = 1.0 # Default probability is 1
-
-            #Count up occurrences of the attribute
-            for record in data:
-                #If it does not exist in occurrences, create it
-                if not (occurrences.has_key(record[attribute])):
-                        occurrences[record[attribute]] = 1.0
-                #Otherwise just add 1
-                else:
-                    occurrences[record[attribute]] += 1
-
-            #Calculate the entropy sum weighted by probability of occurring in data training set
-            for occurrence in occurrences.keys():
-                prob = occurrences[occurrence] / sum(val_freq.values())
-                for record in data:
-                    if record[attribute] == val:
-                        data_subset = record
-                entropy += prob * entropy(data_subset, attribute2)
-
-            #Calculate information gain
-            information_gain = entropy(data, attribute2) - entropy
-            return information_gain
-            
 
         def predict(self, data):
 		"""
