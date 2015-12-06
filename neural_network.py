@@ -22,7 +22,7 @@ class Neural_Network:
 
         Here I have the weight matrices being stored in a list called weights (initially empty).
         """
-        #np.random.seed(50)
+        np.random.seed(50)
         self.classifier_type = classifier_type
         self.params = kwargs
         self.classify = {}
