@@ -4,6 +4,7 @@ Class for a classification algorithm.
 
 import numpy as np
 import pdb
+import math
 
 class Neural_Network:
 
@@ -21,7 +22,7 @@ class Neural_Network:
 
         Here I have the weight matrices being stored in a list called weights (initially empty).
         """
-        np.random.seed(1)
+        #np.random.seed(50)
         self.classifier_type = classifier_type
         self.params = kwargs
         self.classify = {}
@@ -42,16 +43,26 @@ class Neural_Network:
         bh = wrange/2 * (2 * rand(nhid, 1) - 1);
         '''
         #self.weights = [weights from input to hidden , weights from hidden to output ]
-        self.weights.append( .5/2 * (2 * np.random.rand(self.num_input, self.num_hidden) - 1))
-        self.weights.append(.5/2 * (2 * np.random.rand(self.num_hidden, self.num_output) - 1))
+        #self.params['alt_weight'] = 1
+        wrange = 1
+        if 'alt_weight' in self.params:
+            #Glorot & Bengio's weights
+            wrange = 1 / math.sqrt(self.num_input)
+            
+        
+        self.weights.append( wrange * (2 * np.random.rand(self.num_hidden, self.num_input) - 1))
+        self.weights.append( wrange* (2 * np.random.rand(self.num_output, self.num_hidden) - 1))
+        pdb.set_trace()
         #Delta of first weight, delta of 2nd weight
         self.DW = [0, 0]
         self.train_inputs = np.zeros((369, 16))
         self.train_outputs = np.zeros((369, 1))
         #self.bias = [bias of hidden, bias of output]
-        self.bias = [.5/2 * (2 * np.random.rand(self.num_hidden, 1) - 1), .5/2 * (2 * np.random.rand(self.num_output, 1) - 1)] 
+        self.bias = [wrange * (2 * np.random.rand(self.num_hidden, 1) - 1), wrange * (2 * np.random.rand(self.num_output, 1) - 1)] 
         #Delta of first bias, delta of 2nd bias
         self.Db = [0, 0]
+
+        #pdb.set_trace()
         
         #pdb.set_trace()
         """
@@ -93,23 +104,46 @@ class Neural_Network:
         You should print the accuracy, precision, and recall on the training data.
         """
 
-        lrate = 0.1
-        momentum = 0.9
+        lrate = .3
+        momentum = 0
         wdecay = 0
         
-        for a in range(5000):
+        for a in range(100):
             #self.train_output = np.zeros((len(training_data), 1))
+            terr = 0
+            np.random.shuffle(training_data)
+
             for i in range(len(training_data)):
-                self.train_inputs[i] = training_data[i][1:]
-                self.train_outputs[i] = training_data[i][0]
 
-                sig_hid = np.dot(self.train_inputs[i], self.weights[0])
-                sig_hid = np.add(sig_hid, self.bias[0].T)
-                hidden_layer = self.sigmoid(sig_hid)
+                #self.train_inputs[i] = training_data[i][1:]
+                #self.train_outputs[i] = training_data[i][0]
+                curr_input = np.zeros((len(training_data[i][1:]), 1))
+                for x in range(len(training_data[i][1:])):
+                    curr_input[x] = training_data[i][x+1]
 
-                sig_out = np.dot(hidden_layer, self.weights[1])
-                sig_out = np.add(sig_out, self.bias[1].T)
-                curr_output = self.sigmoid(sig_out)
+                #sig_hid = np.dot(self.train_inputs[i], self.weights[0])
+                #sig_hid = np.add(sig_hid, self.bias[0].T)
+                #hidden_layer = self.sigmoid(sig_hid)
+                hidden_layer = self.sigmoid(self.weights[0].dot(curr_input) + self.bias[0])
+
+                #sig_out = np.dot(hidden_layer, self.weights[1])
+                #sig_out = np.add(sig_out, self.bias[1].T)
+                #curr_output = self.sigmoid(sig_out)
+                curr_output = self.sigmoid(self.weights[1].dot(hidden_layer) - self.bias[1])
+
+                tt = np.zeros((self.num_output, 1))
+
+                for outputNum in range(self.num_output):
+                    #if training_data[i][0] == 1:
+                    tt[training_data[i][0]] = 1
+                #pdb.set_trace()
+
+                #err = (tt - curr_output).T.dot(tt-curr_output)
+                err = -(np.multiply(tt,np.log(curr_output) + np.multiply(1-tt,np.log(1 - curr_output)))).sum()
+                #pdb.set_trace()
+                terr += err
+                #pdb.set_trace()
+
 
                 '''
                 tt = tpat(patno, :)
@@ -117,14 +151,37 @@ class Neural_Network:
                 err = (tt-oo)' * (tt-oo'
                 terr = terr + err;
                 '''
-                err = np.multiply(np.linalg.norm(np.subtract(self.train_outputs, curr_output)),np.subtract(self.train_outputs, curr_output))
-                if i > 0:
+                
+                #err = np.multiply(np.linalg.norm(np.subtract(self.train_outputs, curr_output)),np.subtract(self.train_outputs, curr_output))
+                if a > 0:
                     #pdb.set_trace()
                     #backward passing
-                    dtao = np.dot(np.dot(np.subtract(self.train_outputs[i], curr_output),curr_output.T),(1 - curr_output))
-                    blah = np.multiply(np.linalg.norm(self.weights[1]), dtao)
-                    blah2 = np.dot(blah.T,hidden_layer)
-                    dtah = np.dot(blah2,(1 - hidden_layer).T)
+                    #dtao = np.multiply(np.multiply((tt - curr_output),(curr_output)),(1 - curr_output))
+                    #dtah = np.multiply(np.multiply(self.weights[1].T.dot(dtao), hidden_layer),(1 - hidden_layer))
+                    dtao = tt - curr_output
+                    dtah = np.multiply(np.multiply(self.weights[1].T.dot(dtao), hidden_layer), (1 - hidden_layer))
+                    #pdb.set_trace()
+                    
+                    #weight changes
+                    #self.DW[1] = np.subtract(lrate * dtao.dot(hidden_layer.T), self.weights[1].dot(momentum * self.DW[1]))
+                    self.DW[1] = (lrate * dtao * hidden_layer.T) - (wdecay * self.weights[1] + momentum * self.DW[1])
+                    self.DW[0] = (lrate * dtah * curr_input.T) - (wdecay * self.weights[0] + momentum + self.DW[0])
+                    #self.DW[0] = np.subtract(lrate * dtao.dot(curr_output.T), self.weights[1].dot(momentum * self.DW[1]))
+
+                    self.Db[1] = (lrate * dtao * 1) - (wdecay * self.bias[1] + momentum * self.Db[1])
+                    self.Db[0] = (lrate * dtah * 1) - (wdecay * self.bias[0] + momentum * self.Db[0])
+
+                    #update weights
+                    self.weights[1] += self.DW[1]
+                    self.weights[0] += self.DW[0]
+
+                    self.bias[1] += self.Db[1]
+                    self.bias[0] += self.Db[0]
+
+                    #pdb.set_trace()
+
+
+                    '''
 
                     #dealing with the weight changes
                     blah1 = lrate * dtao * np.linalg.norm(hidden_layer)
@@ -144,6 +201,7 @@ class Neural_Network:
                     #pdb.set_trace()
                     #self.bias[0] += self.Db[0]
                     self.bias[1] += self.Db[1]
+                    '''
                     
 
 
@@ -206,24 +264,23 @@ class Neural_Network:
         """
         classification = data[0]
         data = data[1:]
-        curr = np.zeros((1, len(data)))
+        curr = np.zeros((len(data), 1))
         for i in range(len(data)):
-            curr[0][i] = data[i]
-        #pdb.set_trace()
-        #blah = self.weights[0] * curr
-        #pdb.set_trace()
-        #self.sigmoid(self.weights[0] * curr + self.bias[0])
-        #hh = self.sigmoid(np.add(np.multiply(self.weights[0].T,curr),self.bias[0]))
-        hh = self.sigmoid(curr.dot(self.weights[0]) + self.bias[0].T)
-        #pdb.set_trace()
-        oo = self.sigmoid(hh.dot(self.weights[1]) + self.bias[1].T)
+            curr[i] = data[i]
+
+        hh = self.sigmoid(self.weights[0].dot(curr) + self.bias[0])
+        oo = self.sigmoid(self.weights[1].dot(hh) + self.bias[1])
         #pdb.set_trace()
         choice = 0
         maxProb = 0
-        for i in range(len(oo[0])):
-            if oo[0][i] > maxProb:
-                maxProb = oo[0][i]
+
+        blah = oo.argmax()
+
+        for i in range(len(oo)):
+            if oo[i] > maxProb:
+                maxProb = oo[i]
                 choice = i
+        #pdb.set_trace()
         return choice
 
 
