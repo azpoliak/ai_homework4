@@ -52,7 +52,6 @@ class Neural_Network:
         
         self.weights.append( wrange * (2 * np.random.rand(self.num_hidden, self.num_input) - 1))
         self.weights.append( wrange* (2 * np.random.rand(self.num_output, self.num_hidden) - 1))
-        pdb.set_trace()
         #Delta of first weight, delta of 2nd weight
         self.DW = [0, 0]
         self.train_inputs = np.zeros((369, 16))
@@ -108,7 +107,7 @@ class Neural_Network:
         momentum = 0
         wdecay = 0
         
-        for a in range(100):
+        for a in range(800):
             #self.train_output = np.zeros((len(training_data), 1))
             terr = 0
             np.random.shuffle(training_data)
@@ -120,7 +119,6 @@ class Neural_Network:
                 curr_input = np.zeros((len(training_data[i][1:]), 1))
                 for x in range(len(training_data[i][1:])):
                     curr_input[x] = training_data[i][x+1]
-
                 #sig_hid = np.dot(self.train_inputs[i], self.weights[0])
                 #sig_hid = np.add(sig_hid, self.bias[0].T)
                 #hidden_layer = self.sigmoid(sig_hid)

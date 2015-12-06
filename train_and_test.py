@@ -15,16 +15,23 @@ you want to use. But in this module you will need to
 """
 def trainNtest(args):
     classifierType = ["decision_tree", "naive_bayes", "neural_network"]
+    data_set = ["congress", "monk", "iris"]
 
     
     data = ""
     if len(args) == 4:
         if args[0][3:] == "congress":
             data = ld.load_congress_data(int(args[1][3:]) / 100.0)
+            num_input = 16
+            num_output = 2 
         elif args[0][3:] == "monk":
             data = ld.load_monks(int(args[1]))
+            num_input = 6
+            num_output = 2 
         elif args[0][3:] == "iris":
             data = ld.load_iris(int(args[1][3:]) / 100.0)
+            num_input = 4
+            num_output = 3
         else:
             print "INVALID DATA NAME"
             return
@@ -33,7 +40,9 @@ def trainNtest(args):
         if method_num == 0 or method_num == 2:
             kwargs[1] = args[2][5]
             kwargs[2] = args[2][7]
-        classifier = Classifier(classifierType[int(args[2][3])], one=args[2][5], two=args[2][7])
+            classifier = Classifier(classifierType[int(args[2][3])], one=args[2][5], two=args[2][7], num_input=num_input, num_output=num_output)
+        else:
+            classifier = Classifier(classifierType[int(args[2][3])])
     else:
         print "ERROR: NEED 4 PARAMETERS"
         return 
