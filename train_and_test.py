@@ -28,7 +28,12 @@ def trainNtest(args):
         else:
             print "INVALID DATA NAME"
             return
-        classifier = Classifier(classifierType[int(args[2][3:])])
+        method_num = int(args[2][3])
+        kwargs = {}
+        if method_num == 0 or method_num == 2:
+            kwargs[1] = args[2][5]
+            kwargs[2] = args[2][7]
+        classifier = Classifier(classifierType[int(args[2][3])], one=args[2][5], two=args[2][7])
     else:
         print "ERROR: NEED 4 PARAMETERS"
         return 

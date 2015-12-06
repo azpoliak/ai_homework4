@@ -5,7 +5,7 @@ Adam Poliak, Sayge Schell
 Dec 4th, 2015
 
 To run, do the following:
-python train_and_test.py -d=congress -p=85 -m=0 -test
+python train_and_test.py -d=congress -p=75 -m=0 -test
 -d refers to the data set
 -p refers to the percent, if -d is monk, then instead of -p=(int), do 1, 2, or 3 to determine with monk data set
 -m refers to machine learning method
@@ -65,7 +65,7 @@ case of Monk3 and Iris data sets, the accuracy, precision, and recall were lower
             Congress            Monk1           Monk2           Monk3           Iris
 Accuracy:   .889908256881       .576388888889   .643259259259   .731481481481   .947368421053
 Precision:  .971428571429       .551401869159   .674603174603   1.0             .909090909091
-Recall:     .755555555556       .819444444444   .879310344828  .491228070175   .909090909091
+Recall:     .755555555556       .819444444444   .879310344828  .491228070175    .909090909091
 
 *Neural Network* - 
 Key: DW = default weight, AW = alternate weight, M = with momentum, NM = without momentum

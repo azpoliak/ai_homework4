@@ -30,7 +30,6 @@ class Decision_Tree:
                 self.labels = []
                 self.pruning = self.params['pruning']
                 self.IGR = self.params['info_gain_ratio']
-
                 """
 		The kwargs you inputted just becomes a dictionary, so we can save
 		that dictionary to be used in other methods.
@@ -70,7 +69,7 @@ class Decision_Tree:
             #Build tree
             self.tree = self.construct_tree(training_data, self.labels)
             #TODO
-            #Pruning
+            #Post-creation Pruning
             #For pruning, test nodes that have only leaf nodes as decendents
         
         def construct_tree(self, data, labels):

@@ -61,7 +61,8 @@ class Classifier:
             self.nb = Naive_Bayes("naive_bayes")
             self.nb.train(training_data)
         elif self.classifier_type =='decision_tree':
-            self.dt = Decision_Tree("decision_tree")
+            self.dt = Decision_Tree("decision_tree", pruning=self.params['one']=='1',
+                    info_gain_ratio=self.params['two']=='1')
             self.dt.train(training_data)
 
     def predict(self, data):
