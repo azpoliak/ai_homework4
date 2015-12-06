@@ -22,7 +22,7 @@ class Neural_Network:
 
         Here I have the weight matrices being stored in a list called weights (initially empty).
         """
-        np.random.seed(50)
+        np.random.seed(1000)
         self.classifier_type = classifier_type
         self.params = kwargs
         self.classify = {}
@@ -43,7 +43,7 @@ class Neural_Network:
         bh = wrange/2 * (2 * rand(nhid, 1) - 1);
         '''
         #self.weights = [weights from input to hidden , weights from hidden to output ]
-        #self.params['alt_weight'] = 1
+        self.params['alt_weight'] = 1
         wrange = 1
         if 'alt_weight' in self.params:
             #Glorot & Bengio's weights
