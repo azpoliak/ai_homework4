@@ -88,7 +88,8 @@ class Classifier:
         """
         
         #pdb.set_trace()
-        tot, hit = 0, 0
+        #Accuracy, Recall, and Precision
+        relevant_and_retrieved, relevant, retrieved, total, hit = 0, 0, 0, 0, 0
         for person in test_data:
             predict = 0
             if self.classifier_type == 'neural_network':
@@ -98,9 +99,19 @@ class Classifier:
             elif self.classifier_type == 'decision_tree':
                 predict = self.dt.predict(person)
             if predict == person[0]:
+                if predict == 0:
+                    relevant_and_retrieved += 1
                 hit += 1
-            tot += 1
-
-        print hit, tot, hit / float(tot)
+            if person[0] == 0:
+                relevant += 1
+            if predict == 0:
+                retrieved += 1
+            total += 1
+        accuracy = hit/float(total)
+        recall = relevant_and_retrieved/float(relevant)
+        precision = relevant_and_retrieved/float(retrieved)
+        print "Accuracy: ", accuracy
+        print "Precision ", precision
+        print "Recall: " , recall
 
        
