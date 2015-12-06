@@ -56,6 +56,11 @@ Accuracy:   0.526315789474  0.710526315789
 Precision:  0.75            1.0
 Recall:     0.75            0.916666666667
 
+In general, using the information gain ratio will raise the accuracy, recall, and precision of the predictions for the
+test data. That is, generally, it is better to use the information gain ratio to determine the split in the tree rather
+than just the pure information gain. However, in the case of Iris and Monk3, accuracy, precision, and recall were all
+lowered when using the information gain ratio, suggesting that using this is not necessarily better in all cases.
+
 *Naive Bayes*-
 
             Congress            Monk1           Monk2           Monk3           Iris
