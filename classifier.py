@@ -6,6 +6,7 @@ import numpy as np
 import pdb
 from naive_bayes import Naive_Bayes
 from decision_tree import Decision_Tree
+from neural_network import Neural_Network
 
 class Classifier:
 
@@ -52,9 +53,10 @@ class Classifier:
         You should print the accuracy, precision, and recall on the training data.
         """
 
-        if self.classifier_type == 'neural_net':
-            import neural_nets
-            neural_nets.train_neural_net(self.params, training_data)
+        if self.classifier_type == 'neural_network':
+            #change num_input, num_output based upon the data
+            self.nn = Neural_Network("neural_network",weights = [], num_input=16, num_hidden=1000, num_output=2)
+            self.nn.train(training_data)
         elif self.classifier_type == 'naive_bayes':
             self.nb = Naive_Bayes("naive_bayes")
             self.nb.train(training_data)
@@ -83,18 +85,21 @@ class Classifier:
 
         You should print the accuracy, precision, and recall on the test data.
         """
-        if self.classifier_type == 'neural_net':
-            import neural_nets
-            neural_nets.train_neural_net(self.params, training_data)
-        elif self.classifier_type == 'naive_bayes':
-            #pdb.set_trace()
-            tot, hit = 0, 0
-            for person in test_data:
+        
+        #pdb.set_trace()
+        tot, hit = 0, 0
+        for person in test_data:
+            predict = 0
+            if self.classifier_type == 'neural_network':
+                predict = self.nn.predict(person)
+            elif self.classifier_type == 'naive_bayes':
                 predict = self.nb.predict(person)
-                if predict == person[0]:
-                    hit += 1
-                tot += 1
+            elif self.classifier_type == 'decision_tree':
+                predict = self.dt.predict(person)
+            if predict == person[0]:
+                hit += 1
+            tot += 1
 
-            print hit, tot, hit / float(tot)
+        print hit, tot, hit / float(tot)
 
        
