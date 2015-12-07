@@ -7,6 +7,7 @@ import numpy as np
 import pdb
 import math
 import operator
+#import scipy.stats
 
 class Decision_Tree:
 
@@ -30,6 +31,7 @@ class Decision_Tree:
                 self.labels = []
                 self.pruning = self.params['pruning']
                 self.IGR = self.params['info_gain_ratio']
+                self.occurrences = {}
                 """
 		The kwargs you inputted just becomes a dictionary, so we can save
 		that dictionary to be used in other methods.
@@ -57,7 +59,10 @@ class Decision_Tree:
 	You should print the accuracy, precision, and recall on the training data.
 	    """
             #Data is already collected and stored in training_data
-            
+            tally = {} #Create dictionary to hold tallies for pruning
+            tally['tot'] = 0
+            tally[0] = 0
+
             #Create labels
             labels = [0] * len(training_data[0])
             i = 0
@@ -68,9 +73,67 @@ class Decision_Tree:
 
             #Build tree
             self.tree = self.construct_tree(training_data, self.labels)
-            #TODO
-            #Post-creation Pruning
-            #For pruning, test nodes that have only leaf nodes as decendents
+            if self.pruning:
+                for data in training_data:
+                    self.add_occurrences(self.tree, data, "")
+                #self.prune_tree()
+
+        """def prune_tree(self):
+            #Prunes the tree.
+            #Check for each path
+            for path in self.occurrences:
+                #If it is a leaf
+                if self.occurrences[path][0] == sum(self.occurrences[path][1:]):
+                    parent = '-'.join(path.split('-')[:-1])
+                    test_par = [self.occurrences[parent][0],0,0]
+                    test_par[1] = self.occurrences[parent][1] + self.occurrences[path][1]
+                    test_par[2] = self.occurrences[parent][2] + self.occurrences[path][2]
+                    S = self.occurrences[parent][0]
+                    pS = test_par[1]
+                    nS = test_par[2]
+                    sf = self.occurrences[path][0] 
+                    st = S - sf
+                    
+                    y_lost_real = [sf, 0]
+                    y_nlost_real = [0, st]
+                    y_lost_expected = [(sf*pS/float(S)), (st*pS/float(S))]
+                    y_nlost_expected = [(sf*nS/float(S)), (st*nS/float(S))]
+                    
+                    try:
+                        c = ((sum(y_lost_real) - sum(y_lost_expected))**2)/(sum(y_lost_expected)) + ((sum(y_nlost_real) - sum(y_nlost_expected))**2)/(sum(y_nlost_expected))
+
+                        p = 1-scipy.stats.chi2.cdf(c, 2)
+                        #If probability is less than cutoff point, prune
+                        if p <= 0.05:
+                            self.prune(parent, path)
+                    except:
+                        print "fail", path
+                            
+                    #pdb.set_trace()"""
+        """
+        def prune(self, parent, child):
+            #Prunes the branch from the tree.
+            path = []
+            currTree = self.tree
+            #child = child.split('-')[1:]
+
+            parent1 = parent.split('-')[1:]
+            parent1 = [int(i) for i in parent1] 
+            Q = [parent1[0]]
+            curTree = self.tree
+
+            for i in range(len(parent1) -1):
+                path_part = parent[i]
+                current_index = path_part
+                currTree = currTree[path_part]
+                #Check each child
+                for child in currTree[path_part]:
+                    #check to see if keys contain next path part
+                    print(child.keys)
+                    if parent[i+1] in child.keys():
+                        currTree = currTree[parent[i+1]]
+            pdb.set_trace()
+        """
         
         def construct_tree(self, data, labels):
             """Constucts a tree given the data and attributes."""
@@ -94,7 +157,30 @@ class Decision_Tree:
                     tree[best_label][val] = self.construct_tree(self.split_data_on_attribute(data, best_feature, val), subset_labels)
             
             return tree
+        
+        def add_occurrences(self, tree, data, path):
+            """Adds the occurrences to a given tree using the data."""
+            first_label = tree.keys()[0]
+            dictionary = tree[first_label]
 
+            for key in dictionary.keys():
+                #try:
+                    if data[first_label] == key:
+                            #Add the occurrences
+                        path += '-' + str(first_label)
+                        if path not in self.occurrences:
+                            self.occurrences[path] = [0, 0, 0]
+                        self.occurrences[path][0] += 1
+                        if type(dictionary[key]).__name__ == 'dict':
+                            self.add_occurrences(dictionary[key], data, path)
+                        else:
+                            if path not in self.occurrences:
+                                self.occurrences[path] = [0, 0, 0]
+                            if dictionary[key] == 0:
+                                self.occurrences[path][1] += 1
+                            else:
+                                self.occurrences[path][2] += 1
+        
         def choose_best_split(self, data):
             """Chooses the best feature tosplit the tree on."""
             numFeatures = len(data[0]) - 1 # Counts how many data features there are
