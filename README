@@ -5,14 +5,23 @@ Adam Poliak, Sayge Schell
 Dec 4th, 2015
 
 To run, do the following:
-python train_and_test.py -d=congress -p=75 -m=0 -test
+
+Decision Trees:
+
+python train_and_test.py -d=congress -p=75 -m=0-0-0 -test
+
+Naive Bayes:
+python train_and_test.py -d=congress -p=75 -m=1 -test
+
+Neural Networks:
+python train_and_test.py -d=congress -p=75 -m=0-0-0 -test
+
+
+***Notes:
 -d refers to the data set
 -p refers to the percent, if -d is monk, then instead of -p=(int), do 1, 2, or 3 to determine with monk data set
--m refers to machine learning method
-
-**TODO**
--igr refers to information gain ratio in the case m is the decision tree
--pr refers to pruning in the case m is the decision tree
+-m refers to machine learning method.
+    - If m=0, the 2nd number indicates whether or not pruning is set (0 is not set, 1 is set), 3rd number indicates whether or not information gain ration is set (0 for not set, 1 is set)
 
 **Class Descriptions**
 decision_tree.py - Contains structure for decision tree
@@ -20,7 +29,7 @@ naive_bayes.py - Contains structure for naive bayes
 neural_network.py - Contains structure for neural network
 train_and_test.py - Driver program to use structures
 
-Please note, for precision, the value for the first data set was chosen as the 'positive' one. All other values were set
+Please note, for precision and recall, '0' was selected for the value for the 'positive' one. All other values were set
 to be negatives.
 
 *Decision Trees* -
