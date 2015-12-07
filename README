@@ -80,35 +80,30 @@ Recall:     .755555555556       .333333333333   .879310344828   1.0             
 *Neural Network* - 
 Key: DW = default weight, AW = alternate weight, M = with momentum, NM = without momentum
             DW-NM           AW-NM           DW-M            AW-M
-Congress-
-
-Accuracy:
-Precision:
-Recall:
+Congress-   
+Accuracy:   0.871559633028
+Precision:  0.897435897436
+Recall:     0.777777777778
 
 Monk1 -
+Accuracy:   0.94212962963
+Precision:  0.99481865285
+Recall:     0.88888888889
 
-Accuracy:
-Precision:
-Recall:
-
-Monk2 -
-
-Accuracy:
-Precision:
-Recall:
+Monk2 -     
+Accuracy:   0.671296296296
+Precision:  0.671296296296
+Recall:     1.0
 
 Monk3 -
-
-Accuracy:
-Precision:
-Recall:
+Accuracy:   0.925925925926
+Precision:  0.913451538462
+Recall:     0.93137254902
 
 Iris-
-
-Accuracy:
-Precision:
-Recall:
+Accuracy:   0.973684210526
+Precision:  1.0
+Recall:     1.0
 
 Discuss how the performances of the algorithms compare on each data set.
 
@@ -122,7 +117,8 @@ Iris:
 Which metrics do you use to determine this and how does the nature of the data set affect your decision?
 
 Work Breakdown: 
-Naive Bayes + Neural Networks : Adam
-Decision Trees + Data: Sayge
+Naive Bayes: Adam
+Decision Trees: Sayge
+Neural Networks + Decision Tree Pruning + Data: Adam + Sayge
 
 Bugs: TODO
