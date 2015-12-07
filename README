@@ -22,6 +22,8 @@ python train_and_test.py -d=congress -p=75 -m=0-0-0 -test
 -p refers to the percent, if -d is monk, then instead of -p=(int), do 1, 2, or 3 to determine with monk data set
 -m refers to machine learning method.
     - If m=0, the 2nd number indicates whether or not pruning is set (0 is not set, 1 is set), 3rd number indicates whether or not information gain ration is set (0 for not set, 1 is set)
+#TODO UPDATE THIS FOR NEURAL NETWORKS INPUT
+
 
 **Class Descriptions**
 decision_tree.py - Contains structure for decision tree
@@ -33,10 +35,10 @@ Please note, for precision and recall, '0' was selected for the value for the 'p
 to be negatives.
 
 *Decision Trees* -
-Key: IGR = Information Gain ratio, IG = Information Gain, NP = No pruning, P = Pruning
+Key: IGR = Information Gain ratio, IG = Information Gain, NP = No pruning
 
 Congress- 
-            IGR-NP          IG - NP             IGR -P              IGR - NP
+            IGR-NP          IG - NP       
 Accuracy:   0.935779815614  0.926605504587
 Precision:  0.931818181818  0.911111111111
 Recall:     0.911111111111  0.911111111111
@@ -69,6 +71,9 @@ In general, using the information gain ratio will raise the accuracy, recall, an
 test data. That is, generally, it is better to use the information gain ratio to determine the split in the tree rather
 than just the pure information gain. However, in the case of Iris and Monk3, accuracy, precision, and recall were all
 lowered when using the information gain ratio, suggesting that using this is not necessarily better in all cases.
+
+We did not end up fully implementing pruning, but if we were to, the accuracy would most likely remain the same, the
+precision would go up, and the recall would go down.
 
 *Naive Bayes*-
 
@@ -105,20 +110,34 @@ Accuracy:   0.973684210526
 Precision:  1.0
 Recall:     1.0
 
-Discuss how the performances of the algorithms compare on each data set.
+#TODO DIFFERENCES BETWEEN NEURAL NETWORK DATA + Add in your data with -p=75
 
 *Best Algorithms for each data set*
-Congress:
-Monk1:
-Monk2:
-Monk3:
-Iris:
+Congress: Decision Tree (w/ information gain ratio)
+Monk1: Neural Network (w/ default weight, no momentum)
+Monk2: Neural Network (w/ default weight, no momentum)
+Monk3: Decision Tree (w/ information gain)
+Iris: Neural Network (w/ default weight, no momentum)
 
-Which metrics do you use to determine this and how does the nature of the data set affect your decision?
+We decided on the best for each data set by determining the method that provided the highest average of accuracy, precision, and recall.
+If we look at the best methods for each, they make some logical sense. For example, it makes sense that Congress would be best with a
+decision tree. It is likely that one of the criteria is most important and would sway the vote. It is also likely that there is a second
+most important criteria that can sway the vote. That is, people naturally tend to categorize political issues by importance, and will vote
+based on their personal ranking of importance. This is exactly what the tree is doing. Additionally, it makes sense that the Iris data would
+best work with a neural network. A neural network is supposed to mimic a brain and create connections between certain input and certain output.
+There is no single 'most important' factor that makes an Iris an Iris. Rather, it is the entire set of factors that come together that can
+allow the Iris to be recognized as the specific Iris. This neural network works like a brain to recognize the type of Iris.
+
+#TODO : ADD TO THIS : Which metrics do you use to determine this and how does the nature of the data set affect your decision?
 
 Work Breakdown: 
 Naive Bayes: Adam
 Decision Trees: Sayge
 Neural Networks + Decision Tree Pruning + Data: Adam + Sayge
 
-Bugs: TODO
+#TODO : Detail this more if you want.
+Bugs: We did not fully implement pruning. We were able to count all occurrences for each path using the data, calculate
+the chi-squared number, and perform the significance test to decide whether or not to prune. However, we had problems
+traversing our data structure because we did not use a node class (just a dictionary). We also noticed this gave us some
+weird leafs to collapse. (In one of our cases, it said the head node should be collapsed into one of it's children,
+which did not seem correct). If we had implemented the structure with nodes, then pruning would have been much easier.
