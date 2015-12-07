@@ -55,7 +55,7 @@ class Classifier:
 
         if self.classifier_type == 'neural_network':
             #change num_input, num_output based upon the data
-            self.nn = Neural_Network("neural_network",weights = [], num_input=self.params['num_input'], num_hidden=1000, num_output=self.params['num_output'], alt_weight=self.params['one']=='1')
+            self.nn = Neural_Network("neural_network",weights = [], num_input=self.params['num_input'], num_hidden=1000, num_output=self.params['num_output'], alt_weight=self.params['one']=='1', momentum=self.params['two']=='1')
             self.nn.train(training_data)
         elif self.classifier_type == 'naive_bayes':
             self.nb = Naive_Bayes("naive_bayes")

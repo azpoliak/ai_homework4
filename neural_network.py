@@ -34,19 +34,8 @@ class Neural_Network:
         self.epsilon = .01
         self.reg_lamba = .01
 
-        '''
-        Set initial weights ans bias
-        wrange = 0.5;
-        Whi = wrange/2 * (2 * rand(nhid, ninput) - 1);
-        Woh = wrange/2 * (2 * rand(noutput, nhid) - 1);
-        bo = wrange/2 * (2 * rand(noutput, 1) - 1);
-        bh = wrange/2 * (2 * rand(nhid, 1) - 1);
-        '''
-        #self.weights = [weights from input to hidden , weights from hidden to output ]
-        #self.params['alt_weight'] = 1
         wrange = 1
         if self.params['alt_weight']:
-            pdb.set_trace()
             #Glorot & Bengio's weights
             wrange = 1 / math.sqrt(self.num_input)
             
@@ -106,6 +95,8 @@ class Neural_Network:
 
         lrate = .3
         momentum = 0
+        if self.params["momentum"]:
+            momentum = 0.00001
         wdecay = 0
         
         for a in range(800):
@@ -143,29 +134,16 @@ class Neural_Network:
                 terr += err
                 #pdb.set_trace()
 
-
-                '''
-                tt = tpat(patno, :)
-                Sum of sqaured error
-                err = (tt-oo)' * (tt-oo'
-                terr = terr + err;
-                '''
-                
-                #err = np.multiply(np.linalg.norm(np.subtract(self.train_outputs, curr_output)),np.subtract(self.train_outputs, curr_output))
                 if a > 0:
                     #pdb.set_trace()
                     #backward passing
-                    #dtao = np.multiply(np.multiply((tt - curr_output),(curr_output)),(1 - curr_output))
-                    #dtah = np.multiply(np.multiply(self.weights[1].T.dot(dtao), hidden_layer),(1 - hidden_layer))
                     dtao = tt - curr_output
                     dtah = np.multiply(np.multiply(self.weights[1].T.dot(dtao), hidden_layer), (1 - hidden_layer))
                     #pdb.set_trace()
                     
                     #weight changes
-                    #self.DW[1] = np.subtract(lrate * dtao.dot(hidden_layer.T), self.weights[1].dot(momentum * self.DW[1]))
                     self.DW[1] = (lrate * dtao * hidden_layer.T) - (wdecay * self.weights[1] + momentum * self.DW[1])
                     self.DW[0] = (lrate * dtah * curr_input.T) - (wdecay * self.weights[0] + momentum + self.DW[0])
-                    #self.DW[0] = np.subtract(lrate * dtao.dot(curr_output.T), self.weights[1].dot(momentum * self.DW[1]))
 
                     self.Db[1] = (lrate * dtao * 1) - (wdecay * self.bias[1] + momentum * self.Db[1])
                     self.Db[0] = (lrate * dtah * 1) - (wdecay * self.bias[0] + momentum * self.Db[0])
@@ -177,73 +155,6 @@ class Neural_Network:
                     self.bias[1] += self.Db[1]
                     self.bias[0] += self.Db[0]
 
-                    #pdb.set_trace()
-
-
-                    '''
-
-                    #dealing with the weight changes
-                    blah1 = lrate * dtao * np.linalg.norm(hidden_layer)
-                    blah3 = wdecay * self.weights[1] + momentum * self.DW[0]
-                    self.DW[0] = np.subtract(lrate * dtao * np.linalg.norm(hidden_layer),wdecay * self.weights[1] + momentum * self.DW[0])
-                    blah = lrate * dtah * np.linalg.norm(self.train_inputs[i])
-                    blah2 = wdecay * self.weights[0] + momentum * self.DW[1]
-                    #pdb.set_trace()
-                    #self.DW[1] = np.subtract(lrate * dtah * np.linalg.norm(self.train_inputs[i]), wdecay * self.weights[0] + momentum * self.DW[1])
-                    self.Db[0] = np.subtract(lrate * dtao * 1, wdecay * self.bias[0] + momentum * self.Db[0])
-                    self.Db[1] = np.subtract(lrate * dtah * 1, wdecay * self.bias[1] + momentum * self.Db[1])
-
-                    # update the weights
-                    
-                    self.weights[0] += self.DW[1]
-                    self.weights[1] += self.DW[0]
-                    #pdb.set_trace()
-                    #self.bias[0] += self.Db[0]
-                    self.bias[1] += self.Db[1]
-                    '''
-                    
-
-
-
-
-
-            '''
-                % backward pass
-                deltao = (tt - oo) .* oo .* (1-oo);
-                deltah = (Woh' * deltao) .* hh .* (1-hh);
-                
-                % weight change
-                delta_Woh = lrate * deltao * hh' - wdecay * Woh + momentum * delta_Woh;
-                delta_Whi = lrate * deltah * ii' - wdecay * Whi + momentum * delta_Whi;
-                delta_bo = lrate * deltao * 1 - wdecay * bo + momentum * delta_bo;
-                delta_bh = lrate * deltah * 1 - wdecay * bh + momentum * delta_bh;
-                
-                % Update weights
-                Woh = Woh + delta_Woh;
-                Whi = Whi + delta_Whi;
-                bo = bo + delta_bo;
-                bh = bh + delta_bh;
-            '''
-            #pdb.set_trace()
-
-
-            #l1 = self.nonlin(np.dot(self.train_inputs, self.weights[0]))
-            #curr_hidden = self.sigmoid(np.add(np.multiply(self.weights[0], curr_input), self.bias[0]))
-            #curr_hidden = self.sigmoid(np.add(np.dot(self.weights[0], self.train_inputs), self.bias[0]))
-            '''tot1, tot0, correct = 0, 0, 0
-            for i in range(len(curr_output)):
-                guess = 0
-                if curr_output[i][1] > curr_output[i][0]:
-                    guess = 1
-                    tot1 += 1
-                else:
-                    tot0 += 1
-                if guess == training_data[i][0]:
-                    correct += 1'''
-
-            print a
-
-            #pdb.set_trace() 
 
     def predict(self, data):
         """
