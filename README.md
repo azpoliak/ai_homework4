@@ -17,7 +17,7 @@ Neural Networks:
 python train_and_test.py -d=congress -p=75 -m=0-0-0 -test
 
 
-***Notes:
+***Notes:***
 -d refers to the data set
 -p refers to the percent, if -d is monk, then instead of -p=(int), do 1, 2, or 3 to determine with monk data set
 -m refers to machine learning method.
